@@ -3,6 +3,12 @@ Record the learning process of Qt
 
 # Chapter04 
 
+## samp4_9
+
+1. QComboBox使用Model/View结构存储和显示下拉列表的数据，下拉列表的数据实际上存储在QStandardItemModel模型里，并通过QListView的子类组件显示。
+
+2. ComboBox下拉列表的每个项（item）还可以使用函数setItemData()为一个项设置多个QVariant类型的用户数据，用户数据并不显示在界面上。
+
 ## smap4_13
 
 1. QTableWidget的每个单元格都需要关联一个QTableWidgetItem对象。每个QTableWidgetItem对象，存储了单元格的文字及格式定义，QTableWidget根据每个单元格对应的QTableWidgetItem的各种属性绘制表格。
