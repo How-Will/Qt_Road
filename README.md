@@ -33,4 +33,34 @@ Record the learning process of Qt
 
 >【To-do】中文乱码问题总是无法解决。
 
+## samp5_3
+
+1. QStyledItemDelegate是视图组件使用的默认的代理类，自定义代理类需要从QStyledItemDelegate类继承，并实现该类中定义的4个虚函数。
+
+2. 实例化自定义代理对象后，利用视图组件的setItemDelegateForColumn()函数，为不同的列设置自定义代理。
+
+# Chapter09
+
+## samp9_1
+
+1. 要在Qt项目中使用数据库编程功能，需要在.pro文件中添加语句 `QT += sql`。如果要在头文件或源文件中用到Qt SQL模块中的类，需要包含`QtSQL`模块。
+
+2. QSqlDatabase类用于建立与数据库的连接，一个QSqlDatabase对象就表示一个数据库连接。其他操作数据库的对象都需要用到数据库连接。
+
+3. QSqlDatabase类的功能主要分为3部分：利用静态函数QSalDatabase::addDatabase()创建数据库连接，利用静态函数QSalDatabase::open()打开数据库【需要提前设置好数据库参数，如用户名和密码】，数据库信息的获取和事务操作。
+
+4. QDataWidgetMapper类对象要设置一个QSqlTableModel模型，然后将数据表的某个字段与界面上的某个组件建立映射，界面组件就可以自动显示这个字段的数据，成为数据感知组件。
+
+5. QSqlTableModel::setEditStrategy(QSqlTableModel::EditStrategy strategy)通过传入参数设置数据保存策略。当传入参数是QSqlTableModel::OnManualSubmit时，表示暂时缓存修改，待调用函数submitAll()后，保存所有修改到数据库中。
+
+6. 在使用setTable()设置数据表之后，还需要运行函数select()才能将数据刷新到模型中。
+
+7. QSqlRecord类记录了数据表的字段信息和一条记录的数据内容。
+
+8. QDataWidgetMapper没有选择模型，所以在数据表格上点击单元格，使数据模型的当前记录发生变化时，dataMapper的当前行并不会自动变化，需要使用如下语句进行手动更新dataMapper的当前行：
+
+    ```c++
+    dataMapper->setCurrentIndex(current.row()); // 更新数据映射的行号
+    ```
+
 
