@@ -63,10 +63,27 @@ Record the learning process of Qt
 
 7. QSqlRecord类记录了数据表的字段信息和一条记录的数据内容。
 
-8. QDataWidgetMapper没有选择模型，所以在数据表格上点击单元格，使数据模型的当前记录发生变化时，dataMapper的当前行并不会自动变化，需要使用如下语句进行手动更新dataMapper的当前行：
+8. QDataWidgetMapper没有选择模型，所以在数据表格上点击单元格，使数据模型的当前记录发生变化时，dataMapper的当前行并不会自动变化，需要使用如下语句进行手动更新dataMapper的当前行。**这样可以使窗口上的数据感知组件刷新并显示当前记录的内容**：
 
     ```c++
     dataMapper->setCurrentIndex(current.row()); // 更新数据映射的行号
+    ```
+
+## samp9_2
+
+1. QSqlQueryModel模型的数据是只读的，即使在界面上修改了QSqlQueryModel模型的数据，也不能将所做的修改提交到数据库。
+
+2. 通过toFirst()，toLast()等函数去移动QDataWidgetMapper对象的当前行时，数据模型的当前记录不会自动变化，需要根据根据QDataWidgetMapper对象的当前行设置选择模型的当前行，这样才能使QTableView组件和数据感知组件的当前行是同步的，代码如下：
+
+    ```c++
+    void MainWindow::refreshTableView()
+    {
+        // 刷新tableView的当前行
+        int index = dataMapper->currentIndex(); // dataMapper的当前行号
+        QModelIndex curIndex = qryModel->index(index, 1);   // 为当前行创建模型索引
+        selModel->clearSelection();
+        selModel->setCurrentIndex(curIndex, QItemSelectionModel::Select);   // 设置当前行
+    }
     ```
 
 
