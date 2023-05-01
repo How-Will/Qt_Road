@@ -71,7 +71,7 @@ Record the learning process of Qt
 
 ## samp9_2
 
-1. QSqlQueryModel模型的数据是只读的，即使在界面上修改了QSqlQueryModel模型的数据，也不能将所做的修改提交到数据库。
+1. QSqlQueryModel可以查询数据并作为数据模型，但是它获得的数据集是只读的，即使在界面上修改了QSqlQueryModel模型的数据，也不能将所做的修改提交到数据库。
 
 2. 通过toFirst()，toLast()等函数去移动QDataWidgetMapper对象的当前行时，数据模型的当前记录不会自动变化，需要根据根据QDataWidgetMapper对象的当前行设置选择模型的当前行，这样才能使QTableView组件和数据感知组件的当前行是同步的，代码如下：
 
@@ -86,4 +86,18 @@ Record the learning process of Qt
     }
     ```
 
+## samp9_3
+
+1. 为了动态生成SQL语句，可以使用函数prepare()设置带有参数的SQL语句，然后用函数bindValue()为语句中的参数绑定数值，再用exec()运行SQL语句，具体代码如下：
+
+    ```c++
+    QSqlQuery query;    // 根据EmpNO查询Memo和Photo字段的数据
+    query.prepare("SELECT EmpNo, Memo, Photo FROM employee WHERE EmpNo = :ID");
+    query.bindValue(":ID", empNo);
+    query.exec();
+    ```
+
+2. 若exec()不带任何参数执行，则运行有prepare()和bindValue()设置的SQL语句；若设置的参数是一条SQL语句，则直接运行这条SQL语句。
+
+3. 使用QSqlQuery对象更新数据库后，需要重新设置QSqlQueryModel的SQL语句，并查询数据，以更新数据集和tableView的显示内容。
 
