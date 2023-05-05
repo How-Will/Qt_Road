@@ -45,6 +45,30 @@ Record the learning process of Qt
 
 2. 实例化自定义代理对象后，利用视图组件的setItemDelegateForColumn()函数，为不同的列设置自定义代理。
 
+# Chapter06
+
+## samp6_1
+
+1. **自生事件**自动进入系统队列，函数`postEvent(QObject *receiver,, QEvent *event, int priority = Qt::NormalEventPriority)`产生**发布事件**进入Qt事件列队，自生事件与发布事件的处理是**异步**的。而函数`sendEvent(QObject *receiver,, QEvent *event)`产生**发送事件**，该函数以**同步**模式运行，即需要等待对象处理完事件后才退出。
+
+2. 应用程序的事件循环只处理自生事件和发布事件，而不会处理发送事件，因为发送事件由应用程序直接派发给某个对象，以同步模式运行。
+
+3. 如果从QWidget或其派生类继承自定义了一个类，需要对某种类型的事件进行处理，**首先查找是否在QWidget中已有与事件类型对应的事件处理函数**，对其进行重写即可。**如果需要处理的事件在QWidget中没有定义对应的事件处理函数**，就需要重写函数event()，判断事件类型后调用给自定义的事件处理函数。
+
+4. 按下上，下，左，右方向键时不会产生QEvent::KeyPress类型的事件，只会在按键释放时产生QEvent::KeyRelease类型的事件。
+
+## samp6_2
+
+1. **使用创建C++类向导自动生成的类，其构造函数没有任何参数，这样会有问题，因为界面组件必须有一个父容器组件。**
+
+    ```c++
+    TMyLabel(QWidget *parent = nullptr);    // 构造函数需要按此参数改写
+    ```
+
+2. 在自定义类里重写event()，对特定事件类型进行处理后，还需要调用父类的event()去处理其他典型事件。
+
+3. 使用提升法提升组件的类后，提升成的类里新定义的属性，信号等不会在Qt Creator环境里显示出来。
+
 # Chapter09
 
 ## samp9_1
@@ -100,4 +124,3 @@ Record the learning process of Qt
 2. 若exec()不带任何参数执行，则运行有prepare()和bindValue()设置的SQL语句；若设置的参数是一条SQL语句，则直接运行这条SQL语句。
 
 3. 使用QSqlQuery对象更新数据库后，需要重新设置QSqlQueryModel的SQL语句，并查询数据，以更新数据集和tableView的显示内容。
-
