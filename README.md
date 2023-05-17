@@ -95,7 +95,15 @@ Record the learning process of Qt
 
 3. “确定”按钮的代码里一般最后要调用函数accept()，这样函数exec()的返回值就是QDialog::Accepted。而“取消”按钮的代码里一般最后要调用函数reject()，这样函数exec()的返回值就是QDialog::Rejected。
 
-4. 默认设置下，关闭对话框时对话框只是隐藏，而不会从内存中删除。可以通过QWidget的setAttribute()函数将对话框设置为关闭时自动删除。
+4. 默认设置下，关闭对话框时对话框只是隐藏，而不会从内存中删除。可以通过QWidget的setAttribute(Qt::WA_DeleteOnClose)函数将对话框设置为关闭时自动删除。
+
+## samp7_3
+
+1. 要自定义窗口外观，需要通过函数setWindowFlag()，设置Qt::CustomizeWindowHint特性。
+
+2. 在Qt5中没有setWindowFlag()函数，与之起相同作用的函数是setWindowFlags()。
+
+3. 对于嵌入式的TFormTable窗口，它的工具按钮的statusTip信息显示在主窗口的状态栏上；对于独立的TFormTable窗口，它的工具按钮的statusTip信息显示在自己的状态栏上。
 
 # Chapter09
 
