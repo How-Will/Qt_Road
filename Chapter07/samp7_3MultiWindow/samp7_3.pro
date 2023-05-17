@@ -11,15 +11,24 @@ CONFIG += c++11
 SOURCES += \
     main.cpp \
     mainwindow.cpp \
-    tdialogsize.cpp
+    tdialogheaders.cpp \
+    tdialogsize.cpp \
+    tformdoc.cpp \
+    tformtable.cpp
 
 HEADERS += \
     mainwindow.h \
-    tdialogsize.h
+    tdialogheaders.h \
+    tdialogsize.h \
+    tformdoc.h \
+    tformtable.h
 
 FORMS += \
     mainwindow.ui \
-    tdialogsize.ui
+    tdialogheaders.ui \
+    tdialogsize.ui \
+    tformdoc.ui \
+    tformtable.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
